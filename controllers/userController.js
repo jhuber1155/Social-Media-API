@@ -58,9 +58,29 @@ module.exports = {
                 res.status(404).json({ message: 'No User with that ID' });
             }
             await Thought.deleteMany({ _id: { $in: user.thoughts } });
-            res.json({ message: 'Uer and their thoughts have been deleted!' });
+            res.json({ message: 'User and their thoughts have been deleted!' });
         } catch (err) {
             res.status(500).json(err);
         }
     },
+    async createFriend(req, res) {
+        try{
+            const friend = await User.create(req.body);
+            res.json(friend);
+        } catch (err) {
+            console.log(err);
+            return res.status(500).json(err);
+        }
+    },
+    async deleteFriend(req, res) {
+        try{
+            const friend = await User.findOneAndDelete({ _id: req.params.friendId });
+
+            if(!friend) {
+                res.status(404).json ({ message: 'No friend exists with that ID' });
+            }
+        } catch (err) {
+            res.status(500).json(err);
+        }
+    }
 };
