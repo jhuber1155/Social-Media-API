@@ -61,4 +61,24 @@ module.exports = {
             res.status(500).json(err);
         }
     },
+    async createReaction(req, res){
+        try{
+            const reaction = await Thought.create(req.body);
+            res.json(reaction);
+        } catch (err) {
+            console.log(err);
+            return res.status(500).json(err);
+        }
+    },
+    async deleteReaction(req, res){
+        try{
+            const reaction = await Thought.findOneAndDelete({ _id: req.params.reactionId });
+
+            if(!reaction) {
+                res.status(404).json ({ message: 'No reaction found '});
+            }
+        } catch (err) {
+            res.status(500).json(err);
+        }
+    }
 };
