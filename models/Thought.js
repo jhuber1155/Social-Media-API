@@ -1,7 +1,7 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model, ObjectId } = require('mongoose');
 const dayjs = require('dayjs');
 
-const reactionSchema = new mongoose.Schema({
+const reactionSchema = new Schema({
     reactionId: {
         type: Schema.Types.ObjectId,
         default: new ObjectId ()
@@ -48,7 +48,7 @@ const thoughtSchema = new Schema(
     }
   );
 
-  thoughtSchema.virtual('reactionCount')/get(function (){
+  thoughtSchema.virtual('reactionCount').get(function (){
     return this.reactions.length;
 });
   
